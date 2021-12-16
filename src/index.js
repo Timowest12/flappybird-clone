@@ -40,7 +40,9 @@
  
 //60fps
  function update(time, delta){
- 
+ if (bird.y > config.height + bird.height|| bird.y  < 0 - bird.height) {
+   alert('you lost!')
+ }
  }
 
  function flap() {
