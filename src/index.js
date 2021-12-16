@@ -11,16 +11,26 @@
    },
    scene:{
       preload,
-      create
+      create,
+      update
    }
  }
  function preload(params) {
     this.load.image('sky','assets/sky.png')
     this.load.image('bird','assets/bird.png')
  }
+
+ let bird = null;
  function create(params) {
    this.add.image(0,0,'sky').setOrigin(0,0)
-   this.add.sprite(config.width/10,config.height/2,'bird').setOrigin(0.5,0.5)
+   bird = this.physics.add.sprite(config.width/10,config.height/2,'bird').setOrigin(0.5,0.5)
+   bird.body.velocity.y = 200
+   console.log(bird.body)
+ }
+//60fps
+ function update(time, delta){
+  console.log(delta)
+  //delta time = miniseconds
  }
  
 new Phaser.Game(config);
