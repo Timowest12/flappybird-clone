@@ -14,6 +14,11 @@
       create
    }
  }
+ function preload(params) {
 
+ }
+ function create(params) {
+ 
+ }
  
 new Phaser.Game(config);
