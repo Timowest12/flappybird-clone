@@ -19,7 +19,8 @@
     this.load.image('bird','assets/bird.png')
  }
  function create(params) {
- 
+   this.add.image(0,0,'sky').setOrigin(0,0)
+   this.add.sprite(config.width/10,config.height/2,'bird').setOrigin(0.5,0.5)
  }
  
 new Phaser.Game(config);
