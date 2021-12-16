@@ -15,7 +15,8 @@
    }
  }
  function preload(params) {
-
+    this.load.image('sky','assets/sky.png')
+    this.load.image('bird','assets/bird.png')
  }
  function create(params) {
  
