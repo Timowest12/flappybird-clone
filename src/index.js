@@ -21,12 +21,16 @@
  }
 
  const VELOCITY = 200
+const PIPES_TO_RENDER = 
+
  let bird = null;
  let upperPipe = null;
  let LowerPipe = null;
 
  const pipeVerticalDistanceRange = [150,250]
- let pipeVerticalDistance = Phaser.Math.Between(pipeVerticalDistanceRange[0],pipeVerticalDistanceRange[1])
+ let pipeVerticalDistance = Phaser.Math.Between(...pipeVerticalDistanceRange)
+ let pipeVerticalPosition = Phaser.Math.Between(0 + 20,config.height - 20 - pipeVerticalDistance)
+ 
  
 
  const flapVelocity = 250
@@ -46,9 +50,14 @@
    bird = this.physics.add.sprite(initialBirdPosition.x,initialBirdPosition.y,'bird').setOrigin(0.5,0.5)
    bird.body.gravity.y = 400
 
-
-   upperPipe = this.physics.add.sprite(400,100,'pipe').setOrigin(0,1)
+   for (let index = 0; index < PIPES_TO_RENDER; index++) {
+     const element = array[index];
+     upperPipe = this.physics.add.sprite(400,pipeVerticalPosition,'pipe').setOrigin(0,1)
    LowerPipe = this.physics.add.sprite(400,upperPipe.y + pipeVerticalDistance,'pipe').setOrigin(0,0)
+   }
+
+
+   
 
    pipe.x = 100
    pipe.y = pipe.height
