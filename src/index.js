@@ -21,15 +21,13 @@
  }
 
  const VELOCITY = 200
-const PIPES_TO_RENDER = 
-
+const PIPES_TO_RENDER = 100
+ 
  let bird = null;
- let upperPipe = null;
- let LowerPipe = null;
+ let pipeHorizontalDistance = null
 
  const pipeVerticalDistanceRange = [150,250]
- let pipeVerticalDistance = Phaser.Math.Between(...pipeVerticalDistanceRange)
- let pipeVerticalPosition = Phaser.Math.Between(0 + 20,config.height - 20 - pipeVerticalDistance)
+ 
  
  
 
@@ -47,20 +45,20 @@ const PIPES_TO_RENDER =
  function create(params) {
    this.add.image(0,0,'sky').setOrigin(0,0)
    //this.add.image(0,0,'pipe').setOrigin(0,0)
+   
    bird = this.physics.add.sprite(initialBirdPosition.x,initialBirdPosition.y,'bird').setOrigin(0.5,0.5)
    bird.body.gravity.y = 400
 
-   for (let index = 0; index < PIPES_TO_RENDER; index++) {
-     const element = array[index];
-     upperPipe = this.physics.add.sprite(400,pipeVerticalPosition,'pipe').setOrigin(0,1)
-   LowerPipe = this.physics.add.sprite(400,upperPipe.y + pipeVerticalDistance,'pipe').setOrigin(0,0)
-   }
+for (let i = 0; i < PIPES_TO_RENDER; i++) {
+  const upperPipe = this.physics.add.sprite(0,0,'pipe').setOrigin(0,1)
+   const LowerPipe = this.physics.add.sprite(0,0,'pipe').setOrigin(0,0)
 
-
+   placePipe(upperPipe,LowerPipe)
+}
    
 
-   pipe.x = 100
-   pipe.y = pipe.height
+/*    pipe.x = 100
+   pipe.y = pipe.height */
   
    this.input.on('pointerdown',flap)
    this.input.keyboard.on('keydown_SPACE',flap)
@@ -72,6 +70,22 @@ const PIPES_TO_RENDER =
  if (bird.y > config.height + bird.height|| bird.y  < 0 - bird.height) {
    restartBirdPosition()
  }
+ }
+
+ function placePipe(uPipe,lPipe) {
+  pipeHorizontalDistance += 400
+  let pipeVerticalDistance = Phaser.Math.Between(...pipeVerticalDistanceRange)
+  let pipeVerticalPosition = Phaser.Math.Between(0 + 20,config.height - 20 - pipeVerticalDistance)
+
+
+    uPipe.x = pipeHorizontalDistance
+    uPipe.y = pipeVerticalPosition
+
+    lPipe.x = uPipe.x
+    lPipe.y = uPipe.y + pipeVerticalDistance
+
+    lPipe.body.velocity.x = -200
+    uPipe.body.velocity.x = -200
  }
 
  function restartBirdPosition(){
